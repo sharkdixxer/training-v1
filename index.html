@@ -1,0 +1,2106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Trainingsbuch">
+<title>Trainingsbuch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4EFE6;
+    --bg-card: #FBF8F3;
+    --bg-elevated: #FFFFFF;
+    --ink: #1F1B17;
+    --ink-soft: #5C5249;
+    --ink-muted: #8B7F73;
+    --accent: #B8512A;
+    --accent-soft: #E8C4B0;
+    --accent-bg: rgba(184, 81, 42, 0.08);
+    --success: #5A7A3D;
+    --success-bg: rgba(90, 122, 61, 0.1);
+    --line: #E2D8C7;
+    --line-soft: #EFE8DA;
+    --shadow-sm: 0 1px 2px rgba(31, 27, 23, 0.04);
+    --shadow-md: 0 2px 8px rgba(31, 27, 23, 0.06);
+    --shadow-lg: 0 8px 24px rgba(31, 27, 23, 0.08);
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Hanken Grotesk', -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: contain;
+  }
+
+  body {
+    min-height: 100vh;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  input, button, textarea {
+    font-family: inherit;
+    font-size: 16px; /* prevents iOS zoom */
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .app {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px 16px 100px;
+    padding-top: calc(16px + env(safe-area-inset-top));
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+    padding: 8px 4px;
+  }
+
+  .header-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .header-date {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-hero {
+    background: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: var(--accent-bg);
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .card-hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+
+  .hero-subtitle {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.15s ease;
+    min-height: 48px;
+    text-decoration: none;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .btn-accent {
+    background: var(--accent);
+    color: white;
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+  }
+
+  .btn-secondary {
+    background: var(--bg-card);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    padding: 8px 12px;
+    min-height: 36px;
+  }
+
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--accent-bg);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .btn-block {
+    width: 100%;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-card);
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .tab.active {
+    background: var(--bg-elevated);
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Exercise cards in workout mode */
+  .exercise-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .exercise-card.complete {
+    border-color: var(--success);
+    background: var(--success-bg);
+  }
+
+  .exercise-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    cursor: pointer;
+  }
+
+  .exercise-icon {
+    width: 56px;
+    height: 56px;
+    background: var(--accent-bg);
+    border-radius: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .exercise-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .exercise-meta {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .exercise-name {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 2px;
+    letter-spacing: -0.01em;
+  }
+
+  .exercise-muscle {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  .exercise-progress-badge {
+    background: var(--bg-elevated);
+    color: var(--ink-soft);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--line);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .exercise-progress-badge.complete {
+    background: var(--success);
+    color: white;
+    border-color: var(--success);
+  }
+
+  /* Sets */
+  .sets-container {
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--line-soft);
+    margin-top: 4px;
+  }
+
+  .suggestion-banner {
+    background: var(--accent-bg);
+    color: var(--ink);
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .suggestion-banner strong {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .set-row {
+    display: grid;
+    grid-template-columns: 28px 1fr 1fr 36px;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 0;
+  }
+
+  .set-row.header {
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 4px;
+  }
+
+  .set-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    text-align: center;
+  }
+
+  .set-header-label {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .set-input {
+    width: 100%;
+    padding: 10px 8px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+    color: var(--ink);
+    text-align: center;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 0.15s ease;
+  }
+
+  .set-input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+  }
+
+  .set-input::placeholder {
+    color: var(--ink-muted);
+    font-weight: 400;
+    opacity: 0.6;
+  }
+
+  .set-note-toggle {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink-muted);
+    cursor: pointer;
+    padding: 0;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .set-note-toggle.has-note {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border-color: var(--accent-soft);
+  }
+
+  .set-note-input {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .set-note-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .last-time-hint {
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-align: center;
+    margin-top: 8px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* History */
+  .session-card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+
+  .session-date {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 4px;
+  }
+
+  .session-stats {
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  .session-exercises {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line-soft);
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .session-exercise-line {
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .session-exercise-name {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .session-exercise-vol {
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+  }
+
+  /* Plan view */
+  .plan-item {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .plan-item-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--accent-bg);
+    border-radius: 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+
+  .plan-item-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .plan-item-meta {
+    flex: 1;
+  }
+
+  .plan-item-name {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .plan-item-muscle {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  .plan-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  .plan-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--bg-elevated);
+    color: var(--ink-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .plan-action-btn:active {
+    background: var(--bg-card);
+  }
+
+  .plan-action-btn.danger {
+    color: var(--accent);
+  }
+
+  /* Modals */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(31, 27, 23, 0.5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    animation: fade-in 0.2s ease;
+  }
+
+  .modal {
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: slide-up 0.25s ease;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--bg-elevated);
+    color: var(--ink);
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .modal-actions .btn {
+    flex: 1;
+  }
+
+  /* Image-related styles */
+  .photo-section {
+    margin-bottom: 14px;
+  }
+
+  .photo-preview {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .photo-empty {
+    color: var(--ink-muted);
+    font-size: 13px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .photo-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .photo-buttons .btn {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    min-height: 40px;
+  }
+
+  .photo-input {
+    display: none;
+  }
+
+  /* Image in plan/exercise card replaces icon when present */
+  .exercise-photo {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+  }
+
+  .exercise-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .plan-item-photo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+  }
+
+  .plan-item-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Photo lightbox in workout */
+  .photo-thumb-large {
+    margin: 12px 0;
+    width: 100%;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+  }
+
+  .photo-thumb-large img {
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    cursor: pointer;
+  }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* Confirm dialog */
+  .confirm-modal {
+    background: var(--bg);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
+    width: 100%;
+    max-width: 400px;
+    animation: slide-up 0.25s ease;
+  }
+
+  .confirm-message {
+    font-size: 16px;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--ink-muted);
+  }
+
+  .empty-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  /* Stats summary */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .stat-box {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 8px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  /* Bottom action bar */
+  .bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+  }
+
+  .bottom-bar .btn {
+    flex: 1;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    animation: toast-in 0.3s ease;
+  }
+
+  @keyframes toast-in {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+
+  /* Utility */
+  .hidden { display: none !important; }
+  .text-muted { color: var(--ink-muted); }
+  .text-accent { color: var(--accent); }
+  .text-center { text-align: center; }
+  .mb-0 { margin-bottom: 0; }
+  .mt-2 { margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+/* ============================================
+   Trainingsbuch — Krafttraining Tracker
+   Persistent, single-file, mobile-first
+   ============================================ */
+
+// ---------- Exercise illustrations (SVG) ----------
+const ICONS = {
+  legPress: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="3"/><path d="M11 16v6l-2 8"/><path d="M11 22l4 2 6-4"/><path d="M21 20l8-3 4 6-4 4-7-3"/><path d="M30 27l3 5"/></svg>`,
+  legCurl: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="2.5"/><path d="M11 20l8 0 6 4 4-2"/><path d="M25 24l-2 6"/><path d="M29 22l1 7"/></svg>`,
+  legExt: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="3"/><path d="M11 16l1 8 8 1 6-6"/><path d="M26 19l3 2"/></svg>`,
+  chestPress: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="13" r="3"/><path d="M14 16v8l-2 7"/><path d="M14 18l8 0 6-3"/><path d="M28 15l4 2"/></svg>`,
+  butterfly: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="13" r="3"/><path d="M20 16v8M20 16l-7 3M20 16l7 3"/><path d="M13 19l-3 4M27 19l3 4"/><path d="M20 24l-3 8M20 24l3 8"/></svg>`,
+  latPull: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h24"/><path d="M14 6v4M26 6v4"/><circle cx="20" cy="14" r="3"/><path d="M20 17v8l-2 7"/><path d="M17 17l-3-7M23 17l3-7"/></svg>`,
+  row: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="13" r="3"/><path d="M14 16v8l-2 7"/><path d="M14 18l-4 2M14 20l8 0 6 2"/><path d="M28 22l4 2"/></svg>`,
+  shoulderPress: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="15" r="3"/><path d="M20 18v6l-2 7"/><path d="M20 18l-5-5M20 18l5-5"/><path d="M13 11l-2-3M27 11l2-3"/></svg>`,
+  abCrunch: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="13" r="3"/><path d="M13 16c2 4 6 6 12 6"/><path d="M25 22c2 0 4 1 5 3"/><path d="M13 19l-1 6 4 4"/></svg>`,
+  backExt: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="14" r="3"/><path d="M11 17c2 1 6 1 10 1l8-1"/><path d="M22 18l3 7M29 17l4 6"/><path d="M14 14l-3-2"/></svg>`,
+  triceps: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="13" r="3"/><path d="M14 16v8l-2 7"/><path d="M14 18l4 2 2 5 4 3"/><path d="M14 9V5"/></svg>`,
+  biceps: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="13" r="3"/><path d="M14 16v8l-2 7"/><path d="M14 18l5-1 1-5"/><path d="M20 12V6"/></svg>`,
+  default: `<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="17" width="6" height="6" rx="1"/><rect x="30" y="17" width="6" height="6" rx="1"/><rect x="11" y="19" width="18" height="2" rx="1"/></svg>`,
+};
+
+// ---------- Default plan (McFit-typical full-body) ----------
+const DEFAULT_PLAN = [
+  { id: 'leg_press', name: 'Beinpresse', muscle: 'Beine', icon: 'legPress', minReps: 10, maxReps: 13, sets: 3, increment: 5 },
+  { id: 'leg_curl', name: 'Beinbeuger liegend', muscle: 'Beinbeuger', icon: 'legCurl', minReps: 10, maxReps: 13, sets: 3, increment: 2.5 },
+  { id: 'chest_press', name: 'Brustpresse', muscle: 'Brust', icon: 'chestPress', minReps: 10, maxReps: 13, sets: 3, increment: 2.5 },
+  { id: 'lat_pull', name: 'Latzug', muscle: 'Rücken (oben)', icon: 'latPull', minReps: 10, maxReps: 13, sets: 3, increment: 2.5 },
+  { id: 'seated_row', name: 'Rudermaschine sitzend', muscle: 'Rücken (Mitte)', icon: 'row', minReps: 10, maxReps: 13, sets: 3, increment: 2.5 },
+  { id: 'shoulder_press', name: 'Schulterdrücker', muscle: 'Schultern', icon: 'shoulderPress', minReps: 10, maxReps: 13, sets: 3, increment: 2.5 },
+  { id: 'ab_crunch', name: 'Bauchpresse', muscle: 'Bauch', icon: 'abCrunch', minReps: 12, maxReps: 15, sets: 3, increment: 2.5 },
+  { id: 'back_ext', name: 'Rückenstrecker', muscle: 'unterer Rücken', icon: 'backExt', minReps: 12, maxReps: 15, sets: 3, increment: 2.5 },
+];
+
+const ICON_OPTIONS = [
+  { value: 'legPress', label: 'Beinpresse' },
+  { value: 'legCurl', label: 'Beinbeuger' },
+  { value: 'legExt', label: 'Beinstrecker' },
+  { value: 'chestPress', label: 'Brustpresse' },
+  { value: 'butterfly', label: 'Butterfly' },
+  { value: 'latPull', label: 'Latzug' },
+  { value: 'row', label: 'Rudern' },
+  { value: 'shoulderPress', label: 'Schulterdrücker' },
+  { value: 'abCrunch', label: 'Bauchpresse' },
+  { value: 'backExt', label: 'Rückenstrecker' },
+  { value: 'triceps', label: 'Trizeps' },
+  { value: 'biceps', label: 'Bizeps' },
+  { value: 'default', label: 'Sonstiges' },
+];
+
+// ---------- State ----------
+let state = {
+  plan: [],
+  sessions: [],
+  currentSession: null,
+  view: 'home', // home | workout | history | plan
+  expandedExercise: null,
+  noteOpen: {}, // {exerciseId-setIdx: true}
+  images: {}, // {exerciseId: dataUrl} — loaded lazily on init
+};
+
+const STORAGE_KEY = 'trainingsbuch_v1';
+const DB_NAME = 'trainingsbuch';
+const DB_VERSION = 1;
+const IMG_STORE = 'images';
+
+// ---------- Storage Layer ----------
+// localStorage for small structured data (plan, sessions)
+// IndexedDB for binary-ish data (compressed photos as data URLs, can be 50-200KB each)
+
+let dbPromise = null;
+function getDB() {
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
+    if (!window.indexedDB) {
+      reject(new Error('IndexedDB nicht verfügbar'));
+      return;
+    }
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(IMG_STORE)) {
+        db.createObjectStore(IMG_STORE);
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+  return dbPromise;
+}
+
+async function dbGet(key) {
+  try {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(IMG_STORE, 'readonly');
+      const req = tx.objectStore(IMG_STORE).get(key);
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  } catch (e) {
+    return null;
+  }
+}
+
+async function dbSet(key, value) {
+  const db = await getDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IMG_STORE, 'readwrite');
+    const req = tx.objectStore(IMG_STORE).put(value, key);
+    req.onsuccess = () => resolve(true);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function dbDelete(key) {
+  try {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(IMG_STORE, 'readwrite');
+      const req = tx.objectStore(IMG_STORE).delete(key);
+      req.onsuccess = () => resolve(true);
+      req.onerror = () => reject(req.error);
+    });
+  } catch (e) {
+    return false;
+  }
+}
+
+async function dbListKeys() {
+  try {
+    const db = await getDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(IMG_STORE, 'readonly');
+      const req = tx.objectStore(IMG_STORE).getAllKeys();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => reject(req.error);
+    });
+  } catch (e) {
+    return [];
+  }
+}
+
+// ---------- Persistence ----------
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      state.plan = data.plan || DEFAULT_PLAN;
+      state.sessions = data.sessions || [];
+      state.currentSession = data.currentSession || null;
+    } else {
+      state.plan = JSON.parse(JSON.stringify(DEFAULT_PLAN));
+    }
+  } catch (e) {
+    console.error('Load failed', e);
+    state.plan = JSON.parse(JSON.stringify(DEFAULT_PLAN));
+  }
+}
+
+let saveTimeout;
+function saveState() {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        plan: state.plan,
+        sessions: state.sessions,
+        currentSession: state.currentSession,
+      }));
+    } catch (e) {
+      console.error('Save failed', e);
+      showToast('Speichern fehlgeschlagen');
+    }
+  }, 200);
+}
+
+// ---------- Utilities ----------
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: 'short' });
+}
+function formatDateLong(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+}
+function todayStr() {
+  return new Date().toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long' });
+}
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+function getIcon(name) {
+  return ICONS[name] || ICONS.default;
+}
+
+// Find the last completed session that included a given exercise
+function lastSessionForExercise(exerciseId) {
+  for (let i = state.sessions.length - 1; i >= 0; i--) {
+    const s = state.sessions[i];
+    const ex = s.exercises.find(e => e.exerciseId === exerciseId);
+    if (ex && ex.sets.some(set => set.weight && set.reps)) {
+      return { session: s, exercise: ex };
+    }
+  }
+  return null;
+}
+
+// Suggest weight for next session based on last session performance
+function suggestWeight(exerciseId) {
+  const planEx = state.plan.find(p => p.id === exerciseId);
+  if (!planEx) return null;
+  const last = lastSessionForExercise(exerciseId);
+  if (!last) return null;
+  const validSets = last.exercise.sets.filter(s => s.weight && s.reps);
+  if (validSets.length === 0) return null;
+  const lastWeight = parseFloat(validSets[0].weight);
+  const allHitMax = validSets.length >= planEx.sets &&
+    validSets.every(s => parseInt(s.reps) >= planEx.maxReps);
+  const allBelowMin = validSets.every(s => parseInt(s.reps) < planEx.minReps);
+  if (allHitMax) {
+    return { weight: lastWeight + planEx.increment, action: 'up', reason: `Letztes Mal alle Sätze ≥ ${planEx.maxReps} Wdh.` };
+  } else if (allBelowMin) {
+    return { weight: Math.max(0, lastWeight - planEx.increment), action: 'down', reason: 'Letztes Mal Wdh.-Ziel verfehlt' };
+  } else {
+    return { weight: lastWeight, action: 'hold', reason: 'Gewicht halten, mehr Wdh. anstreben' };
+  }
+}
+
+// ---------- Session management ----------
+function startNewSession() {
+  state.currentSession = {
+    id: uid(),
+    date: new Date().toISOString(),
+    exercises: state.plan.map(p => ({
+      exerciseId: p.id,
+      sets: Array.from({ length: p.sets }, () => ({ weight: '', reps: '', notes: '' })),
+    })),
+  };
+  state.view = 'workout';
+  state.expandedExercise = state.plan[0]?.id || null;
+  saveState();
+  render();
+}
+
+async function finishSession() {
+  if (!state.currentSession) return;
+  const hasAnyData = state.currentSession.exercises.some(e =>
+    e.sets.some(s => s.weight && s.reps)
+  );
+  if (!hasAnyData) {
+    const ok = await confirmDialog('Keine Sätze eingetragen. Trotzdem beenden und verwerfen?', { destructive: true, confirmText: 'Verwerfen' });
+    if (!ok) return;
+    state.currentSession = null;
+    state.view = 'home';
+    saveState();
+    render();
+    return;
+  }
+  const ok = await confirmDialog('Training beenden und speichern?', { confirmText: 'Beenden' });
+  if (!ok) return;
+  state.sessions.push(state.currentSession);
+  state.currentSession = null;
+  state.view = 'home';
+  saveState();
+  render();
+  showToast('Training gespeichert ✓');
+}
+
+async function discardSession() {
+  const ok = await confirmDialog('Aktuelles Training verwerfen? Alle Eingaben gehen verloren.', { destructive: true, confirmText: 'Verwerfen' });
+  if (!ok) return;
+  state.currentSession = null;
+  state.view = 'home';
+  saveState();
+  render();
+}
+
+// Update set value
+function updateSet(exerciseId, setIdx, field, value) {
+  const ex = state.currentSession.exercises.find(e => e.exerciseId === exerciseId);
+  if (!ex) return;
+  ex.sets[setIdx][field] = value;
+  saveState();
+}
+
+// Auto-mark exercise complete when all sets have weight + reps
+function isExerciseComplete(exerciseId) {
+  if (!state.currentSession) return false;
+  const ex = state.currentSession.exercises.find(e => e.exerciseId === exerciseId);
+  if (!ex) return false;
+  const planEx = state.plan.find(p => p.id === exerciseId);
+  return ex.sets.length === planEx.sets &&
+    ex.sets.every(s => s.weight && s.reps);
+}
+
+function completedCount() {
+  if (!state.currentSession) return 0;
+  return state.plan.filter(p => isExerciseComplete(p.id)).length;
+}
+
+// ---------- Plan management ----------
+function addExercise(name, muscle, icon, sets, minReps, maxReps, increment) {
+  state.plan.push({
+    id: uid(),
+    name,
+    muscle,
+    icon,
+    sets: parseInt(sets) || 3,
+    minReps: parseInt(minReps) || 10,
+    maxReps: parseInt(maxReps) || 13,
+    increment: parseFloat(increment) || 2.5,
+  });
+  saveState();
+  render();
+}
+
+function updateExercise(id, updates) {
+  const ex = state.plan.find(p => p.id === id);
+  if (!ex) return;
+  Object.assign(ex, updates);
+  saveState();
+  render();
+}
+
+async function deleteExercise(id) {
+  const ok = await confirmDialog('Übung aus dem Plan entfernen? Vergangene Trainings bleiben erhalten.', { destructive: true, confirmText: 'Entfernen' });
+  if (!ok) return;
+  state.plan = state.plan.filter(p => p.id !== id);
+  // Also remove from active session if running
+  if (state.currentSession) {
+    state.currentSession.exercises = state.currentSession.exercises.filter(e => e.exerciseId !== id);
+    if (state.expandedExercise === id) state.expandedExercise = null;
+  }
+  await deleteImage(id);
+  saveState();
+  render();
+}
+
+function moveExercise(id, dir) {
+  const idx = state.plan.findIndex(p => p.id === id);
+  if (idx === -1) return;
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= state.plan.length) return;
+  [state.plan[idx], state.plan[newIdx]] = [state.plan[newIdx], state.plan[idx]];
+  saveState();
+  render();
+}
+
+// ---------- Toast ----------
+function showToast(msg) {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2000);
+}
+
+// ---------- Custom confirm/alert (browser-portable) ----------
+function confirmDialog(message, { confirmText = 'OK', cancelText = 'Abbrechen', destructive = false } = {}) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="confirm-modal" onclick="event.stopPropagation()">
+        <div class="confirm-message">${message}</div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" data-action="cancel">${cancelText}</button>
+          <button class="btn ${destructive ? 'btn-accent' : 'btn-primary'}" data-action="ok" style="${destructive ? 'background:var(--accent);' : ''}">${confirmText}</button>
+        </div>
+      </div>
+    `;
+    const cleanup = (result) => {
+      overlay.remove();
+      resolve(result);
+    };
+    overlay.addEventListener('click', () => cleanup(false));
+    overlay.querySelector('[data-action="cancel"]').onclick = (e) => { e.stopPropagation(); cleanup(false); };
+    overlay.querySelector('[data-action="ok"]').onclick = (e) => { e.stopPropagation(); cleanup(true); };
+    document.body.appendChild(overlay);
+  });
+}
+
+function alertDialog(message) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="confirm-modal" onclick="event.stopPropagation()">
+        <div class="confirm-message">${message}</div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" data-action="ok" style="flex:1;">OK</button>
+        </div>
+      </div>
+    `;
+    const cleanup = () => { overlay.remove(); resolve(); };
+    overlay.addEventListener('click', cleanup);
+    overlay.querySelector('[data-action="ok"]').onclick = (e) => { e.stopPropagation(); cleanup(); };
+    document.body.appendChild(overlay);
+  });
+}
+
+// ---------- Image handling ----------
+function compressImage(file, maxDim = 800, quality = 0.75) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const ratio = Math.min(maxDim / img.width, maxDim / img.height, 1);
+        canvas.width = Math.round(img.width * ratio);
+        canvas.height = Math.round(img.height * ratio);
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function saveImage(exerciseId, dataUrl) {
+  try {
+    await dbSet(exerciseId, dataUrl);
+    state.images[exerciseId] = dataUrl;
+    return true;
+  } catch (e) {
+    console.error('Image save failed', e);
+    showToast('Bild zu groß zum Speichern');
+    return false;
+  }
+}
+
+async function deleteImage(exerciseId) {
+  try {
+    await dbDelete(exerciseId);
+    delete state.images[exerciseId];
+  } catch (e) {
+    console.error('Image delete failed', e);
+  }
+}
+
+async function loadAllImages() {
+  try {
+    const keys = await dbListKeys();
+    for (const key of keys) {
+      try {
+        const value = await dbGet(key);
+        if (value) state.images[key] = value;
+      } catch (e) { /* skip */ }
+    }
+  } catch (e) {
+    // No images yet
+  }
+}
+
+// ---------- Modals ----------
+function showAddExerciseModal(editId = null) {
+  const ex = editId ? state.plan.find(p => p.id === editId) : null;
+  // For new exercises, generate a temp ID so we can attach an image before saving
+  const workingId = editId || ('new_' + uid());
+  let pendingImage = ex ? state.images[ex.id] : null;
+  let pendingImageChanged = false;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal" onclick="event.stopPropagation()">
+      <h3 class="modal-title">${editId ? 'Übung bearbeiten' : 'Übung hinzufügen'}</h3>
+
+      <div class="photo-section">
+        <label class="form-label">Foto vom Gerät</label>
+        <div class="photo-preview" id="m-preview">
+          ${pendingImage ? `<img src="${pendingImage}" alt="">` : `<div class="photo-empty">Noch kein Foto</div>`}
+        </div>
+        <div class="photo-buttons">
+          <button class="btn btn-secondary" id="m-photo-take" type="button">📷 Foto</button>
+          <button class="btn btn-secondary" id="m-photo-pick" type="button">🖼 Galerie</button>
+          ${pendingImage ? `<button class="btn btn-secondary" id="m-photo-del" type="button" style="flex:0 0 auto; padding:10px 14px;">×</button>` : ''}
+        </div>
+        <input class="photo-input" type="file" id="m-photo-camera" accept="image/*" capture="environment">
+        <input class="photo-input" type="file" id="m-photo-file" accept="image/*">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input class="form-input" id="m-name" value="${ex ? ex.name : ''}" placeholder="z.B. Brustpresse (Gerät 7)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Muskelgruppe</label>
+        <input class="form-input" id="m-muscle" value="${ex ? ex.muscle : ''}" placeholder="z.B. Brust">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Symbol (Fallback ohne Foto)</label>
+        <select class="form-input" id="m-icon">
+          ${ICON_OPTIONS.map(o => `<option value="${o.value}" ${ex && ex.icon === o.value ? 'selected' : ''}>${o.label}</option>`).join('')}
+        </select>
+      </div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px;">
+        <div class="form-group">
+          <label class="form-label">Sätze</label>
+          <input class="form-input" id="m-sets" type="number" inputmode="numeric" value="${ex ? ex.sets : 3}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Wdh. min</label>
+          <input class="form-input" id="m-min" type="number" inputmode="numeric" value="${ex ? ex.minReps : 10}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Wdh. max</label>
+          <input class="form-input" id="m-max" type="number" inputmode="numeric" value="${ex ? ex.maxReps : 13}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Steigerung pro Step (kg)</label>
+        <input class="form-input" id="m-incr" type="number" inputmode="decimal" step="0.5" value="${ex ? ex.increment : 2.5}">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="m-cancel">Abbrechen</button>
+        <button class="btn btn-primary" id="m-save">${editId ? 'Speichern' : 'Hinzufügen'}</button>
+      </div>
+    </div>
+  `;
+  overlay.addEventListener('click', () => overlay.remove());
+  document.body.appendChild(overlay);
+
+  // Photo handling
+  const updatePreview = () => {
+    const preview = document.getElementById('m-preview');
+    if (pendingImage) {
+      preview.innerHTML = `<img src="${pendingImage}" alt="">`;
+    } else {
+      preview.innerHTML = `<div class="photo-empty">Noch kein Foto</div>`;
+    }
+    // Re-render delete button visibility
+    const buttonsRow = document.querySelector('.photo-buttons');
+    const existingDel = document.getElementById('m-photo-del');
+    if (pendingImage && !existingDel) {
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn btn-secondary';
+      delBtn.id = 'm-photo-del';
+      delBtn.type = 'button';
+      delBtn.style.cssText = 'flex:0 0 auto; padding:10px 14px;';
+      delBtn.textContent = '×';
+      delBtn.onclick = handleDelete;
+      buttonsRow.appendChild(delBtn);
+    } else if (!pendingImage && existingDel) {
+      existingDel.remove();
+    }
+  };
+
+  const handleFile = async (file) => {
+    if (!file) return;
+    try {
+      showToast('Bild wird verarbeitet…');
+      const dataUrl = await compressImage(file);
+      pendingImage = dataUrl;
+      pendingImageChanged = true;
+      updatePreview();
+    } catch (e) {
+      alertDialog('Bild konnte nicht verarbeitet werden.');
+    }
+  };
+
+  const handleDelete = () => {
+    pendingImage = null;
+    pendingImageChanged = true;
+    updatePreview();
+  };
+
+  document.getElementById('m-photo-take').onclick = () => document.getElementById('m-photo-camera').click();
+  document.getElementById('m-photo-pick').onclick = () => document.getElementById('m-photo-file').click();
+  document.getElementById('m-photo-camera').onchange = (e) => handleFile(e.target.files[0]);
+  document.getElementById('m-photo-file').onchange = (e) => handleFile(e.target.files[0]);
+  if (pendingImage) {
+    const delBtn = document.getElementById('m-photo-del');
+    if (delBtn) delBtn.onclick = handleDelete;
+  }
+
+  document.getElementById('m-cancel').onclick = () => overlay.remove();
+  document.getElementById('m-save').onclick = async () => {
+    const name = document.getElementById('m-name').value.trim();
+    const muscle = document.getElementById('m-muscle').value.trim();
+    const icon = document.getElementById('m-icon').value;
+    const sets = document.getElementById('m-sets').value;
+    const minR = document.getElementById('m-min').value;
+    const maxR = document.getElementById('m-max').value;
+    const incr = document.getElementById('m-incr').value;
+    if (!name || !muscle) {
+      await alertDialog('Bitte Name und Muskelgruppe ausfüllen.');
+      return;
+    }
+    if (editId) {
+      updateExercise(editId, { name, muscle, icon, sets: parseInt(sets), minReps: parseInt(minR), maxReps: parseInt(maxR), increment: parseFloat(incr) });
+      if (pendingImageChanged) {
+        if (pendingImage) await saveImage(editId, pendingImage);
+        else await deleteImage(editId);
+      }
+    } else {
+      // Create new exercise with a real ID, then attach image
+      const newId = uid();
+      const setsCount = parseInt(sets) || 3;
+      state.plan.push({
+        id: newId,
+        name, muscle, icon,
+        sets: setsCount,
+        minReps: parseInt(minR) || 10,
+        maxReps: parseInt(maxR) || 13,
+        increment: parseFloat(incr) || 2.5,
+      });
+      // If there's an active session, add the exercise to it as well
+      if (state.currentSession) {
+        state.currentSession.exercises.push({
+          exerciseId: newId,
+          sets: Array.from({ length: setsCount }, () => ({ weight: '', reps: '', notes: '' })),
+        });
+      }
+      if (pendingImage) await saveImage(newId, pendingImage);
+      saveState();
+    }
+    render();
+    overlay.remove();
+  };
+}
+
+// ---------- Export / Import ----------
+function buildTextSummary() {
+  const lines = [];
+  lines.push('TRAININGSBUCH — Übersicht');
+  lines.push('Stand: ' + new Date().toLocaleString('de-DE'));
+  lines.push('');
+  lines.push('═══ AKTUELLER PLAN ═══');
+  state.plan.forEach((p, i) => {
+    lines.push(`${i + 1}. ${p.name} (${p.muscle}) — ${p.sets}×${p.minReps}-${p.maxReps} Wdh., +${p.increment}kg`);
+  });
+  lines.push('');
+  lines.push(`═══ TRAININGSVERLAUF (${state.sessions.length} Einheiten) ═══`);
+  if (state.sessions.length === 0) {
+    lines.push('(noch keine Trainings absolviert)');
+  } else {
+    [...state.sessions].reverse().forEach(s => {
+      const d = new Date(s.date);
+      const dateStr = d.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric' });
+      const timeStr = d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+      lines.push('');
+      lines.push(`── ${dateStr} ${timeStr} ──`);
+      const validExs = s.exercises.filter(e => e.sets.some(set => set.weight && set.reps));
+      const totalSets = s.exercises.reduce((a, e) => a + e.sets.filter(set => set.weight && set.reps).length, 0);
+      const totalVol = s.exercises.reduce((a, e) =>
+        a + e.sets.reduce((b, set) => b + ((parseFloat(set.weight) || 0) * (parseInt(set.reps) || 0)), 0), 0);
+      lines.push(`Gesamt: ${validExs.length} Übungen, ${totalSets} Sätze, ${Math.round(totalVol).toLocaleString('de-DE')} kg Volumen`);
+      validExs.forEach(e => {
+        const planEx = state.plan.find(p => p.id === e.exerciseId);
+        const name = planEx ? planEx.name : '(gelöschte Übung)';
+        const validSets = e.sets.filter(set => set.weight && set.reps);
+        const setsStr = validSets.map(set => `${set.weight}kg×${set.reps}`).join(', ');
+        const noteStr = validSets.filter(set => set.notes).map(set => set.notes).join(' | ');
+        lines.push(`  • ${name}: ${setsStr}${noteStr ? '  [' + noteStr + ']' : ''}`);
+      });
+    });
+  }
+  lines.push('');
+  lines.push('═══ TRENDS ═══');
+  // Per exercise: how the top set has evolved
+  state.plan.forEach(p => {
+    const history = [];
+    state.sessions.forEach(s => {
+      const ex = s.exercises.find(e => e.exerciseId === p.id);
+      if (!ex) return;
+      const valid = ex.sets.filter(set => set.weight && set.reps);
+      if (valid.length === 0) return;
+      // Use first set as reference (typically heaviest or the working set)
+      const first = valid[0];
+      history.push({ date: s.date, weight: parseFloat(first.weight), reps: parseInt(first.reps), sets: valid.length });
+    });
+    if (history.length === 0) return;
+    const first = history[0];
+    const last = history[history.length - 1];
+    const fDate = new Date(first.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+    const lDate = new Date(last.date).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+    if (history.length === 1) {
+      lines.push(`${p.name}: 1× trainiert (${fDate}: ${first.weight}kg×${first.reps})`);
+    } else {
+      const diff = last.weight - first.weight;
+      const trend = diff > 0 ? `+${diff}kg` : diff < 0 ? `${diff}kg` : '±0kg';
+      lines.push(`${p.name}: ${history.length}× trainiert, ${fDate} (${first.weight}kg×${first.reps}) → ${lDate} (${last.weight}kg×${last.reps}) [${trend}]`);
+    }
+  });
+  return lines.join('\n');
+}
+
+async function exportJSON() {
+  // Bundle everything including images
+  const bundle = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    plan: state.plan,
+    sessions: state.sessions,
+    currentSession: state.currentSession,
+    images: state.images,
+  };
+  const json = JSON.stringify(bundle, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `trainingsbuch-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast('Backup gespeichert ✓');
+}
+
+function showExportModal() {
+  const summary = buildTextSummary();
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal" onclick="event.stopPropagation()">
+      <h3 class="modal-title">Daten exportieren</h3>
+      <p style="color:var(--ink-soft); font-size:14px; margin:0 0 16px;">
+        Zwei Formate: <strong>Text</strong> für Chat-Analyse (lesbar, kompakt), <strong>JSON</strong> als komplettes Backup (inkl. Fotos).
+      </p>
+
+      <label class="form-label">Text-Zusammenfassung (zum Kopieren)</label>
+      <textarea id="exp-text" class="form-input" readonly
+        style="height:240px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size:12px; line-height:1.5; resize:vertical; white-space:pre;">${summary.replace(/</g, '&lt;')}</textarea>
+
+      <div class="modal-actions" style="margin-top:12px;">
+        <button class="btn btn-secondary" id="exp-copy">📋 Text kopieren</button>
+        <button class="btn btn-primary" id="exp-json">💾 JSON-Backup</button>
+      </div>
+
+      <div style="border-top:1px solid var(--line); margin-top:20px; padding-top:16px;">
+        <label class="form-label">JSON-Backup wiederherstellen</label>
+        <p style="font-size:13px; color:var(--ink-muted); margin:0 0 8px;">
+          Überschreibt aktuelle Daten. Nur ein vorher exportiertes Backup verwenden.
+        </p>
+        <input type="file" id="exp-import-file" accept=".json,application/json" class="form-input" style="padding:8px;">
+        <button class="btn btn-secondary btn-block" id="exp-import" style="margin-top:8px;">↑ Backup einspielen</button>
+      </div>
+
+      <div class="modal-actions" style="margin-top:20px;">
+        <button class="btn btn-secondary btn-block" id="exp-close">Schließen</button>
+      </div>
+    </div>
+  `;
+  overlay.addEventListener('click', () => overlay.remove());
+  document.body.appendChild(overlay);
+
+  document.getElementById('exp-close').onclick = () => overlay.remove();
+
+  document.getElementById('exp-copy').onclick = async () => {
+    const ta = document.getElementById('exp-text');
+    try {
+      // Modern API
+      await navigator.clipboard.writeText(summary);
+      showToast('In Zwischenablage kopiert ✓');
+    } catch (e) {
+      // Fallback for older browsers / non-secure contexts
+      ta.removeAttribute('readonly');
+      ta.select();
+      ta.setSelectionRange(0, summary.length);
+      try {
+        document.execCommand('copy');
+        showToast('In Zwischenablage kopiert ✓');
+      } catch (err) {
+        showToast('Bitte manuell kopieren (Text ist markiert)');
+      }
+      ta.setAttribute('readonly', 'true');
+    }
+  };
+
+  document.getElementById('exp-json').onclick = exportJSON;
+
+  document.getElementById('exp-import').onclick = async () => {
+    const fileInput = document.getElementById('exp-import-file');
+    const file = fileInput.files[0];
+    if (!file) {
+      await alertDialog('Bitte zuerst eine JSON-Datei auswählen.');
+      return;
+    }
+    const ok = await confirmDialog('Wirklich einspielen? Alle aktuellen Daten (Plan, Verlauf, Fotos) werden überschrieben.', { destructive: true, confirmText: 'Einspielen' });
+    if (!ok) return;
+    try {
+      const text = await file.text();
+      const bundle = JSON.parse(text);
+      if (!bundle.plan || !Array.isArray(bundle.plan)) {
+        await alertDialog('Ungültiges Backup-Format.');
+        return;
+      }
+      // Apply
+      state.plan = bundle.plan;
+      state.sessions = bundle.sessions || [];
+      state.currentSession = bundle.currentSession || null;
+      state.images = bundle.images || {};
+      // Persist
+      saveState();
+      // Save images one by one
+      for (const [exId, dataUrl] of Object.entries(state.images)) {
+        try { await dbSet(exId, dataUrl); } catch (e) { /* skip */ }
+      }
+      overlay.remove();
+      state.view = 'home';
+      render();
+      showToast('Backup eingespielt ✓');
+    } catch (e) {
+      console.error(e);
+      await alertDialog('Backup konnte nicht gelesen werden: ' + e.message);
+    }
+  };
+}
+
+async function showResetModal() {
+  const ok = await confirmDialog('Plan auf McFit-Standard zurücksetzen? Vergangene Trainings bleiben erhalten.', { destructive: true, confirmText: 'Zurücksetzen' });
+  if (!ok) return;
+  state.plan = JSON.parse(JSON.stringify(DEFAULT_PLAN));
+  saveState();
+  render();
+  showToast('Plan zurückgesetzt');
+}
+
+// ---------- Views ----------
+function renderHome() {
+  const lastSession = state.sessions[state.sessions.length - 1];
+  const totalSessions = state.sessions.length;
+  const thisWeek = state.sessions.filter(s => {
+    const d = new Date(s.date);
+    const now = new Date();
+    const diff = (now - d) / (1000 * 60 * 60 * 24);
+    return diff < 7;
+  }).length;
+  const daysSinceLast = lastSession
+    ? Math.floor((new Date() - new Date(lastSession.date)) / (1000 * 60 * 60 * 24))
+    : null;
+
+  return `
+    <div class="header">
+      <h1 class="header-title">Trainingsbuch</h1>
+      <div class="header-date">${todayStr()}</div>
+    </div>
+
+    <div class="card-hero">
+      <div class="card-hero-content">
+        <div class="hero-eyebrow">${state.currentSession ? 'Training läuft' : 'Bereit'}</div>
+        <h2 class="hero-title">${state.currentSession ? 'Weitermachen' : 'Heute trainieren'}</h2>
+        <p class="hero-subtitle">${state.currentSession ? `${completedCount()} von ${state.plan.length} Übungen erledigt` : `${state.plan.length} Übungen im Plan`}</p>
+        <button class="btn btn-accent" onclick="${state.currentSession ? "switchView('workout')" : 'startNewSession()'}">
+          ${state.currentSession ? 'Training fortsetzen →' : 'Training starten →'}
+        </button>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-value">${totalSessions}</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">${thisWeek}</div>
+        <div class="stat-label">Diese Woche</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">${daysSinceLast !== null ? daysSinceLast + 'd' : '—'}</div>
+        <div class="stat-label">Seit letztem</div>
+      </div>
+    </div>
+
+    ${lastSession ? `
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;">
+          <strong style="font-family:'Fraunces',serif; font-size:16px;">Letztes Training</strong>
+          <span class="text-muted" style="font-size:13px;">${formatDate(lastSession.date)}</span>
+        </div>
+        <div style="font-size:13px; color:var(--ink-soft);">
+          ${lastSession.exercises.filter(e => e.sets.some(s => s.weight)).length} Übungen,
+          ${lastSession.exercises.reduce((acc, e) => acc + e.sets.filter(s => s.weight && s.reps).length, 0)} Sätze
+        </div>
+      </div>
+    ` : ''}
+  `;
+}
+
+function renderWorkout() {
+  if (!state.currentSession) {
+    state.view = 'home';
+    return renderHome();
+  }
+  const cs = state.currentSession;
+  const completed = completedCount();
+
+  return `
+    <div class="header">
+      <div>
+        <h1 class="header-title">Training</h1>
+        <div style="font-size:13px; color:var(--ink-muted); margin-top:2px;">
+          ${completed}/${state.plan.length} fertig · ${formatDate(cs.date)}
+        </div>
+      </div>
+      <button class="btn-ghost" onclick="discardSession()" style="color:var(--ink-muted); border:none; background:none; cursor:pointer; padding:4px;">Abbrechen</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchView('workout')">Heute</button>
+      <button class="tab" onclick="switchView('history')">Verlauf</button>
+      <button class="tab" onclick="switchView('plan')">Plan</button>
+    </div>
+
+    ${state.plan.map(planEx => {
+      const sessionEx = cs.exercises.find(e => e.exerciseId === planEx.id);
+      if (!sessionEx) return '';
+      const complete = isExerciseComplete(planEx.id);
+      const expanded = state.expandedExercise === planEx.id;
+      const suggestion = suggestWeight(planEx.id);
+      const last = lastSessionForExercise(planEx.id);
+
+      return `
+        <div class="exercise-card ${complete ? 'complete' : ''}">
+          <div class="exercise-header" onclick="toggleExercise('${planEx.id}')">
+            ${state.images[planEx.id]
+              ? `<div class="exercise-photo"><img src="${state.images[planEx.id]}" alt=""></div>`
+              : `<div class="exercise-icon">${getIcon(planEx.icon)}</div>`}
+            <div class="exercise-meta">
+              <h3 class="exercise-name">${planEx.name}</h3>
+              <div class="exercise-muscle">${planEx.muscle}</div>
+            </div>
+            <div class="exercise-progress-badge ${complete ? 'complete' : ''}">
+              ${sessionEx.sets.filter(s => s.weight && s.reps).length}/${planEx.sets}
+            </div>
+          </div>
+          ${expanded ? `
+            <div class="sets-container">
+              ${state.images[planEx.id] ? `
+                <div class="photo-thumb-large" onclick="showLightbox('${planEx.id}')">
+                  <img src="${state.images[planEx.id]}" alt="">
+                </div>
+              ` : ''}
+              ${suggestion ? `
+                <div class="suggestion-banner">
+                  ${suggestion.action === 'up' ? '↑' : suggestion.action === 'down' ? '↓' : '→'}
+                  Vorschlag: <strong>${suggestion.weight} kg</strong> · ${suggestion.reason}
+                </div>
+              ` : last ? '' : `
+                <div class="suggestion-banner" style="background:var(--line-soft); color:var(--ink-soft);">
+                  Erste Mal — taste dich an ein passendes Gewicht heran (2 Wdh. in Reserve)
+                </div>
+              `}
+              <div class="set-row header">
+                <div class="set-header-label">Satz</div>
+                <div class="set-header-label">Gewicht</div>
+                <div class="set-header-label">Wdh.</div>
+                <div class="set-header-label">📝</div>
+              </div>
+              ${sessionEx.sets.map((set, idx) => {
+                const noteKey = `${planEx.id}-${idx}`;
+                const noteOpen = state.noteOpen[noteKey] || set.notes;
+                return `
+                  <div class="set-row">
+                    <div class="set-label">${idx + 1}</div>
+                    <input class="set-input" type="number" inputmode="decimal" step="0.5" placeholder="kg"
+                      value="${set.weight}"
+                      oninput="updateSet('${planEx.id}', ${idx}, 'weight', this.value); checkComplete('${planEx.id}')">
+                    <input class="set-input" type="number" inputmode="numeric" placeholder="${planEx.minReps}-${planEx.maxReps}"
+                      value="${set.reps}"
+                      oninput="updateSet('${planEx.id}', ${idx}, 'reps', this.value); checkComplete('${planEx.id}')">
+                    <button class="set-note-toggle ${set.notes ? 'has-note' : ''}" onclick="toggleNote('${planEx.id}', ${idx})">
+                      ${set.notes ? '●' : '+'}
+                    </button>
+                    ${noteOpen ? `
+                      <input class="set-note-input" placeholder="Notiz (z.B. ging schwer, Form ok)"
+                        value="${set.notes}"
+                        oninput="updateSet('${planEx.id}', ${idx}, 'notes', this.value)">
+                    ` : ''}
+                  </div>
+                `;
+              }).join('')}
+              ${last ? `
+                <div class="last-time-hint">
+                  Letztes Mal (${formatDate(last.session.date)}):
+                  ${last.exercise.sets.filter(s => s.weight && s.reps).map(s => `${s.weight}kg×${s.reps}`).join(', ')}
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('')}
+
+    <div class="bottom-bar">
+      <button class="btn btn-primary" onclick="finishSession()">Training beenden</button>
+    </div>
+  `;
+}
+
+function renderHistory() {
+  if (state.sessions.length === 0) {
+    return `
+      ${renderTabs()}
+      <div class="empty">
+        <h3 class="empty-title">Noch kein Training</h3>
+        <p>Sobald du dein erstes Training abgeschlossen hast, erscheint es hier.</p>
+      </div>
+    `;
+  }
+  const reversed = [...state.sessions].reverse();
+  return `
+    ${renderTabs()}
+    ${reversed.map(s => {
+      const validExs = s.exercises.filter(e => e.sets.some(set => set.weight && set.reps));
+      const totalSets = s.exercises.reduce((acc, e) => acc + e.sets.filter(set => set.weight && set.reps).length, 0);
+      const totalVolume = s.exercises.reduce((acc, e) =>
+        acc + e.sets.reduce((a, set) =>
+          a + ((parseFloat(set.weight) || 0) * (parseInt(set.reps) || 0)), 0), 0);
+
+      return `
+        <div class="session-card">
+          <h3 class="session-date">${formatDateLong(s.date)}</h3>
+          <div class="session-stats">
+            ${validExs.length} Übungen · ${totalSets} Sätze · ${Math.round(totalVolume).toLocaleString('de-DE')} kg Gesamtvolumen
+          </div>
+          <div class="session-exercises">
+            ${validExs.map(e => {
+              const planEx = state.plan.find(p => p.id === e.exerciseId);
+              const validSets = e.sets.filter(set => set.weight && set.reps);
+              const summary = validSets.map(set => `${set.weight}×${set.reps}`).join(' · ');
+              return `
+                <div class="session-exercise-line">
+                  <span class="session-exercise-name">${planEx ? planEx.name : 'Übung gelöscht'}</span>
+                  <span class="session-exercise-vol">${summary}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('')}
+  `;
+}
+
+function renderPlan() {
+  return `
+    ${renderTabs()}
+    <div style="background:var(--accent-bg); border:1px solid var(--accent-soft); border-radius:var(--radius-md); padding:14px 16px; margin-bottom:14px;">
+      <div style="font-size:13px; color:var(--ink); line-height:1.5;">
+        <strong style="color:var(--accent);">Plan bearbeiten</strong><br>
+        Hier verwaltest du deine Übungen — neue hinzufügen, Fotos vom Gerät machen, Reihenfolge ändern, löschen.
+      </div>
+    </div>
+    <div style="display:flex; gap:8px; margin-bottom:14px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="showAddExerciseModal()">+ Übung hinzufügen</button>
+      <button class="btn btn-secondary" onclick="showExportModal()" title="Daten exportieren">↗</button>
+      <button class="btn btn-secondary" onclick="showResetModal()" title="Plan zurücksetzen">↺</button>
+    </div>
+    <div style="font-size:12px; color:var(--ink-muted); margin-bottom:14px; padding:0 4px; line-height:1.5;">
+      Bei jeder Übung: <strong style="color:var(--ink-soft);">↑↓</strong> Reihenfolge · <strong style="color:var(--ink-soft);">✎</strong> Bearbeiten / Foto · <strong style="color:var(--accent);">×</strong> Löschen
+    </div>
+    ${state.plan.map((p, idx) => `
+      <div class="plan-item">
+        ${state.images[p.id]
+          ? `<div class="plan-item-photo" onclick="showLightbox('${p.id}')"><img src="${state.images[p.id]}" alt=""></div>`
+          : `<div class="plan-item-icon">${getIcon(p.icon)}</div>`}
+        <div class="plan-item-meta">
+          <div class="plan-item-name">${p.name}</div>
+          <div class="plan-item-muscle">${p.muscle} · ${p.sets}×${p.minReps}-${p.maxReps}</div>
+        </div>
+        <div class="plan-actions">
+          ${idx > 0 ? `<button class="plan-action-btn" onclick="moveExercise('${p.id}', -1)">↑</button>` : ''}
+          ${idx < state.plan.length - 1 ? `<button class="plan-action-btn" onclick="moveExercise('${p.id}', 1)">↓</button>` : ''}
+          <button class="plan-action-btn" onclick="showAddExerciseModal('${p.id}')">✎</button>
+          <button class="plan-action-btn danger" onclick="deleteExercise('${p.id}')">×</button>
+        </div>
+      </div>
+    `).join('')}
+    ${state.plan.length === 0 ? `<div class="empty"><h3 class="empty-title">Plan ist leer</h3><p>Füge mindestens eine Übung hinzu.</p></div>` : ''}
+  `;
+}
+
+function renderTabs() {
+  return `
+    <div class="header">
+      <h1 class="header-title">${state.view === 'history' ? 'Verlauf' : 'Plan'}</h1>
+    </div>
+    <div class="tabs">
+      <button class="tab ${state.view === 'home' ? 'active' : ''}" onclick="switchView('home')">Heute</button>
+      <button class="tab ${state.view === 'history' ? 'active' : ''}" onclick="switchView('history')">Verlauf</button>
+      <button class="tab ${state.view === 'plan' ? 'active' : ''}" onclick="switchView('plan')">Plan</button>
+    </div>
+  `;
+}
+
+function renderHomeWithTabs() {
+  return `
+    ${renderHome()}
+    <div class="tabs" style="margin-top:24px;">
+      <button class="tab ${state.view === 'home' ? 'active' : ''}" onclick="switchView('home')">Heute</button>
+      <button class="tab ${state.view === 'history' ? 'active' : ''}" onclick="switchView('history')">Verlauf</button>
+      <button class="tab ${state.view === 'plan' ? 'active' : ''}" onclick="switchView('plan')">Plan</button>
+    </div>
+  `;
+}
+
+// ---------- Top-level render ----------
+function render() {
+  const app = document.getElementById('app');
+  let html = '';
+  switch (state.view) {
+    case 'workout':
+      html = renderWorkout();
+      break;
+    case 'history':
+      html = renderHistory();
+      break;
+    case 'plan':
+      html = renderPlan();
+      break;
+    default:
+      html = renderHomeWithTabs();
+  }
+  app.innerHTML = html;
+}
+
+// ---------- Event helpers (exposed globally for inline handlers) ----------
+window.startNewSession = startNewSession;
+window.finishSession = finishSession;
+window.discardSession = discardSession;
+window.updateSet = updateSet;
+window.deleteExercise = deleteExercise;
+window.moveExercise = moveExercise;
+window.showAddExerciseModal = showAddExerciseModal;
+window.showResetModal = showResetModal;
+window.showExportModal = showExportModal;
+
+window.switchView = function(v) {
+  // If user has an active session and clicks "Heute", show the workout
+  if (v === 'home' && state.currentSession) {
+    state.view = 'workout';
+  } else {
+    state.view = v;
+  }
+  render();
+};
+
+window.toggleExercise = function(id) {
+  state.expandedExercise = state.expandedExercise === id ? null : id;
+  render();
+};
+
+window.toggleNote = function(exId, idx) {
+  const key = `${exId}-${idx}`;
+  state.noteOpen[key] = !state.noteOpen[key];
+  render();
+};
+
+window.checkComplete = function(exId) {
+  // Re-render only the badge if needed; simpler: re-render whole view, but only if status changes
+  // To keep input focus during typing, we skip re-render here and just update the badge in DOM
+  const ex = state.currentSession.exercises.find(e => e.exerciseId === exId);
+  const planEx = state.plan.find(p => p.id === exId);
+  const card = document.querySelector(`.exercise-card .exercise-header[onclick*="${exId}"]`)?.closest('.exercise-card');
+  if (!card) return;
+  const filledCount = ex.sets.filter(s => s.weight && s.reps).length;
+  const badge = card.querySelector('.exercise-progress-badge');
+  if (badge) badge.textContent = `${filledCount}/${planEx.sets}`;
+  const isComplete = filledCount === planEx.sets;
+  card.classList.toggle('complete', isComplete);
+  badge.classList.toggle('complete', isComplete);
+};
+
+window.showLightbox = function(exId) {
+  const img = state.images[exId];
+  if (!img) return;
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML = `<img src="${img}" alt="">`;
+  lb.onclick = () => lb.remove();
+  document.body.appendChild(lb);
+};
+
+// ---------- Init ----------
+(async function init() {
+  loadState();
+  await loadAllImages();
+  if (state.currentSession) {
+    state.view = 'workout';
+    state.expandedExercise = state.currentSession.exercises.find(e =>
+      !e.sets.every(s => s.weight && s.reps)
+    )?.exerciseId || null;
+  }
+  render();
+})();
+</script>
+</body>
+</html>
